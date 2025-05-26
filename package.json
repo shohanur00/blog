@@ -1,0 +1,27 @@
+{
+  "name": "blog_project_nodejs_jun_2024",
+  "version": "1.0.0",
+  "main": "sever.js",
+  "scripts": {
+    "start": "node server.js",
+    "devStart": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1",
+    "helmet": "^8.1.0",
+    "path": "^0.12.7",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.4"
+  }
+}
+  
