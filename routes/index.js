@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
 
             res.render('index', result);
             //console.log(result.author[0].name)
+            //console.log(result);
         
         }
        

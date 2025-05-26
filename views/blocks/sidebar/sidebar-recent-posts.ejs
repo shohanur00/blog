@@ -1,14 +1,12 @@
+<% let recentPosts = post.slice(0,8); %>
 <div class="widget widget-recent-posts">		
-    <h3 class="widget-title">Recent Posts</h3>		
+    <h3 class="widget-title">নতুন লেখাসমূহ</h3>		
     <ul>
+        <% recentPosts.forEach(item => { %>
         <li>
-            <a href="#">Adaptive Vs. Responsive Layouts And Optimal Text Readability</a>
+            <a href="/posts/<%= item.id %> "><%= item.title %> </a>
         </li>
-        <li>
-            <a href="#">Web Design is 95% Typography</a>
-        </li>
-        <li>
-            <a href="#">Paper by FiftyThree</a>
-        </li>
+        <% }); %> 
+        
     </ul>
 </div>

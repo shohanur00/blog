@@ -1,0 +1,11 @@
+<div class="widget widget-category">		
+    <h3 class="widget-title">ওলামা-মাসায়েখ</h3>		
+    <ul>
+        <% author.forEach(item => { %>
+        <li>
+            <a href="/posts/author/<%= item.id %>"><%= item.name %></a>
+        </li>
+        <% }); %> 
+        
+    </ul>
+</div>

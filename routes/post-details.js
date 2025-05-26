@@ -1,32 +1,32 @@
-const express = require('express')
-const router = express.Router()
-const postModel = require('../models/post-details')
-
-// router.use((req,res,next) => {
-
-//     res.render('post-details')
-
-// })
-
-// router.get('/',(req,res)=>{
-//     res.render('post-details')
-// })
+const express = require('express');
+const router = express.Router();
+const postModel = require('../models/post-details');
+const indexModel = require('../models/index');
 
 router.get('/:id', (req, res) => {
     const postId = req.params.id;
 
-    postModel.getPost(postId, (err, getData) => {
-        if (err) {
-            console.error('Error fetching post:', err);
-            return res.status(500).send('Server error');
+    indexModel.getIndexData((indexErr, indexResult) => {
+        if (indexErr) {
+            console.error('Error fetching index data:', indexErr);
+            return res.status(500).send('Server error loading index data');
         }
 
-        if (!getData || getData.length === 0) {
-            return res.status(404).send('Post not found');
-        }
+        postModel.getPost(postId, (postErr, getData) => {
+            if (postErr) {
+                console.error('Error fetching post:', postErr);
+                return res.status(500).send('Server error loading post');
+            }
 
-        res.render('post-details', { post: getData[0] }); // Assuming one post
+            if (!getData || getData.length === 0) {
+                return res.status(404).send('Post not found');
+            }
+            
+            indexResult.target_post = getData[0]
+            console.log(indexResult.target_post)
+            res.render('post-details', indexResult);
+        });
     });
 });
 
-module.exports = router
+module.exports = router;
