@@ -2,9 +2,9 @@ const db = require('./db')
 
 
 const categorySql = 'SELECT id, name FROM public."catagory" ORDER BY id ASC';
-const postSql = 'SELECT id,title,author,time,readtime,image,summary,authid FROM public."post" ORDER BY time DESC LIMIT 10';
-const PosttagSql = 'SELECT postid,tagid,tagname FROM public.tagstopost ORDER BY id ASC ';
-const tagSql  = 'SELECT * FROM public."tags" ORDER BY id ASC';
+const postSql = 'SELECT id,title,author,time,readtime,image,summary,authid FROM public."posts" ORDER BY time DESC LIMIT 10';
+// const PosttagSql = 'SELECT postid,tagid,tagname FROM public.tagstopost ORDER BY id ASC ';
+// const tagSql  = 'SELECT * FROM public."tags" ORDER BY id ASC';
 const authorSql = 'SELECT * FROM public."author" ORDER BY id ASC';
 
 
@@ -19,16 +19,16 @@ const getPost = (callback) => {
     });
 };
 
-const getTags = (callback) => {
-    db.query(tagSql, (error, results) => {
-        if (error) {
-            console.error('Error fetching tags:', error);
-            callback(error, null); // Ensure the callback is called with the error
-            return;
-        }
-        callback(null, results.rows); // Pass the results to the callback
-    });
-};
+// const getTags = (callback) => {
+//     db.query(tagSql, (error, results) => {
+//         if (error) {
+//             console.error('Error fetching tags:', error);
+//             callback(error, null); // Ensure the callback is called with the error
+//             return;
+//         }
+//         callback(null, results.rows); // Pass the results to the callback
+//     });
+// };
 
 
 const getAuthor = (callback) => {
@@ -55,26 +55,24 @@ const getCategory = (callback) => {
     });
 };
 
-const getPostTag = (callback)=>{
-    db.query(PosttagSql, (error, results) => {
-        if (error) {
-            console.error('Error fetching categories:', error);
-            callback(error, null); // Ensure the callback is called with the error
-            return;
-        }
-        callback(null, results.rows); // Pass the results to the callback
-    });
+// const getPostTag = (callback)=>{
+//     db.query(PosttagSql, (error, results) => {
+//         if (error) {
+//             console.error('Error fetching categories:', error);
+//             callback(error, null); // Ensure the callback is called with the error
+//             return;
+//         }
+//         callback(null, results.rows); // Pass the results to the callback
+//     });
 
-}
+// }
 
 
 const getIndexData = (callback) => {
     let data = {
         author: '',
         post: '',
-        tag: '',
-        category: '',
-        posttag:''
+        category: ''
     };
 
     const getAuthorPromise = new Promise((resolve, reject) => {
@@ -99,16 +97,7 @@ const getIndexData = (callback) => {
         });
     });
 
-    const getTagsPromise = new Promise((resolve, reject) => {
-        getTags((err, res) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            data.tag = res;
-            resolve();
-        });
-    });
+    
 
     const getCategoryPromise = new Promise((resolve, reject) => {
         getCategory((err, res) => {
@@ -121,18 +110,9 @@ const getIndexData = (callback) => {
         });
     });
 
-    const getPostTagPromise = new Promise((resolve, reject) => {
-        getPostTag((err, res) => {
-            if (err) {
-                reject(err);
-                return;
-            }
-            data.posttag = res;
-            resolve();
-        });
-    });
+ 
 
-    Promise.all([getAuthorPromise, getPostPromise, getTagsPromise, getCategoryPromise,getPostTagPromise])
+    Promise.all([getAuthorPromise, getPostPromise, getCategoryPromise])
         .then(() => {
             callback(null,data);
         })
