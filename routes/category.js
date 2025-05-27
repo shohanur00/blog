@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const postModel = require('../models/post-details');
 const indexModel = require('../models/index');
-
+const catModel = require('../models/category')
 
 router.get('/:id', (req, res) => {
-    const postId = req.params.id;
+    const catId = req.params.id;
+    console.log(`Fetching post for category ID: ${catId}`);
 
     indexModel.getIndexData((indexErr, indexResult) => {
         if (indexErr) {
@@ -13,7 +14,7 @@ router.get('/:id', (req, res) => {
             return res.status(500).send('Server error loading index data');
         }
 
-        postModel.getPost(postId, (postErr, getData) => {
+        catModel.getCat(catId, (postErr, getData) => {
             if (postErr) {
                 console.error('Error fetching post:', postErr);
                 return res.status(500).send('Server error loading post');
@@ -22,17 +23,26 @@ router.get('/:id', (req, res) => {
             if (!getData || getData.length === 0) {
                 return res.status(404).send('Post not found');
             }
-            
-            indexResult.target_post = getData[0]
-            indexResult.showRecent = true;
-            //console.log(indexResult.target_post)
-            res.render('post-details', indexResult);
+
+            let targetText = '';
+            if (Array.isArray(indexResult.category)) {
+                const matched = indexResult.category.find(element => element.id == catId);
+                if (matched) {
+                    targetText = matched.name;
+                }
+            }
+
+            const resultData = {
+                ...indexResult,
+                target_text: targetText,
+                post: getData,
+                showRecent: false
+            };
+
+            console.log('Rendering post-list with data:', resultData);
+            res.render('post-list', resultData);
         });
     });
 });
-
-
-
-
 
 module.exports = router;

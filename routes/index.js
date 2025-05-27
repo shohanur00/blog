@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
             console.log(error)
         } else {
 
+            result.showRecent = true;
             res.render('index', result);
             //console.log(result.author[0].name)
             //console.log(result);

@@ -31,6 +31,7 @@ const privacyPolicyRouter = require('./routes/privacy-policy')
 const searchRouter = require('./routes/search-result')
 const searchNotRouter = require('./routes/search-not-found')
 const tagsRouter = require('./routes/tags')
+const catRouter = require('./routes/category')
 
  
 
@@ -53,7 +54,8 @@ app.use((err, req, res, next) => {
 app.use('/',indexRouter)
 app.use('/contact',contactRouter)
 app.use('/about',aboutusRouter)
-app.use('/authors',authorRouter)
+app.use('/author',authorRouter)
+app.use('/category',catRouter)
 app.use('/privacy',privacyPolicyRouter)
 app.use('/posts',postDetailsRouter)
 app.use('/search',searchRouter)

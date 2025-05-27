@@ -3,14 +3,14 @@
         <header class="entry-header">
             <h1 class="entry-title"><%= target_post.title %></h1>
             <div class="entry-meta">
-                <span class="post-category"><a href="/posts/category/<%= target_post.catid %>"><%= target_post.catagory %></a></span>
+                <span class="post-category"><a href="/category/<%= target_post.catid %>"><%= target_post.catagory %></a></span>
 
                 <span class="post-date"><a href="#"><time class="entry-date" datetime="<%= target_post.time %>"><%= new Date(target_post.time).toLocaleString('en-US', {
 					year: 'numeric', month: 'long', day: 'numeric',
 					hour: '2-digit', minute: '2-digit'
 				  }) %></time></a></span>
 
-                <span class="comments-link"><a href="/posts/author/<%= target_post.author_id %>"><%= target_post.author %></a></span>
+                <span class="comments-link"><a href="/author/<%= target_post.author_id %>"><%= target_post.author %></a></span>
 
                 <!-- <span class="comments-link"><a href="#">4 Comments</a></span> -->
             </div>

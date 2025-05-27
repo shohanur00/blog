@@ -1,11 +1,11 @@
 const db = require('./db');
 
-const getAuthor = (authid, callback) => {
-    const postSql = 'SELECT id, title,catagory,catid ,author, time, summary, author_id FROM public."posts" WHERE author_id = $1';
+const getCat = (catid, callback) => {
+    const postSql = 'SELECT id, title,catagory,catid ,author, time, summary, author_id FROM public."posts" WHERE catid = $1';
 
     //console.log(postSql);
 
-    db.query(postSql, [authid])  // <- Fix: add [postid] as parameter array
+    db.query(postSql, [catid])  // <- Fix: add [postid] as parameter array
         .then(results => {
             //console.log(results.rows);
             callback(null, results.rows);
@@ -16,4 +16,4 @@ const getAuthor = (authid, callback) => {
         });
 };
 
-module.exports = { getAuthor };
+module.exports = { getCat };

@@ -791,6 +791,7 @@ figure {
 
 .banner {
     background: url('/img/banner.jpg') no-repeat center center;
+	/* background-color: #000; */
     background-size: cover;
     height: 400px;
     display: flex;

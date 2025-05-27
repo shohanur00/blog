@@ -1,7 +1,10 @@
 <aside class="col-md-4">
 			
-      
-			<%- include('../blocks/sidebar/sidebar-recent-posts.ejs') %>
+  <% if (showRecent) { %>
+			
+      <%- include('../blocks/sidebar/sidebar-recent-posts.ejs') %>
+  
+  <% } %>
       <%- include('../blocks/sidebar/sidebar-catagory.ejs') %>
       <%- include('../blocks/sidebar/sidebar-author.ejs') %>	
       <%- include('../blocks/sidebar/sidebar-archives.ejs') %>
@@ -9,3 +12,4 @@
 
 						
 </aside>
+
