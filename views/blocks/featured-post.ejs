@@ -7,14 +7,14 @@
 				<a href="/posts/<%= item.id %>"><%= item.title %></a>
 			</h1>
 			<div class="entry-meta">
-				<span class="post-category"><a href="/posts/category/<%= item.catid %>"><%= item.catagory %></a></span>
+				<span class="post-category"><a href="/category/<%= item.catid %>"><%= item.catagory %></a></span>
 
-				<span class="post-date"><a href="/posts/date/<%= item.time %>"><time class="entry-date" datetime="<%= item.time %>"><%= new Date(item.time).toLocaleString('en-US', {
+				<span class="post-date"><a href="/date/<%= item.time %>"><time class="entry-date" datetime="<%= item.time %>"><%= new Date(item.time).toLocaleString('en-US', {
 					year: 'numeric', month: 'long', day: 'numeric',
 					hour: '2-digit', minute: '2-digit'
 				  }) %></time></a></span>
 
-				<span class="comments-link"><a href="/posts/author/<%= item.author_id %>"><%= item.author %></a></span>
+				<span class="comments-link"><a href="/author/<%= item.author_id %>"><%= item.author %></a></span>
 
 				<!-- <span class="comments-link"><a href="#">4 Comments</a></span> -->
 			</div>
