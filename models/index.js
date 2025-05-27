@@ -2,7 +2,7 @@ const db = require('./db')
 
 
 const categorySql = 'SELECT id, name FROM public."catagory" ORDER BY id ASC';
-const postSql = 'SELECT id,title,author,time,summary,catagory,author_id FROM public."posts" ORDER BY time DESC LIMIT 10';
+const postSql = 'SELECT id,title,author,time,summary,catagory,catid,author_id FROM public."posts" ORDER BY time DESC LIMIT 10';
 const authorSql = 'SELECT * FROM public."author" ORDER BY id ASC';
 
 
