@@ -3,36 +3,33 @@ const router = express.Router();
 const postModel = require('../models/post-details');
 const indexModel = require('../models/index');
 
-
-router.get('/:id', (req, res) => {
+// Route to display individual post with index data and recent posts
+router.get('/:id', async (req, res) => {
     const postId = req.params.id;
+    const limit = 10;
+    const page = parseInt(req.query.page) || 1;
+    const offset = (page - 1) * limit;
+    try {
+        const result = await indexModel.getIndexData({ limit, offset });
+        //console.log(result);
+        const target_post = await postModel.getPost(postId);
+        
 
-    indexModel.getIndexData((indexErr, indexResult) => {
-        if (indexErr) {
-            console.error('Error fetching index data:', indexErr);
-            return res.status(500).send('Server error loading index data');
-        }
-
-        postModel.getPost(postId, (postErr, getData) => {
-            if (postErr) {
-                console.error('Error fetching post:', postErr);
-                return res.status(500).send('Server error loading post');
-            }
-
-            if (!getData || getData.length === 0) {
-                return res.status(404).send('Post not found');
-            }
-            
-            indexResult.target_post = getData[0]
-            indexResult.showRecent = true;
-            //console.log(indexResult.target_post)
-            res.render('post-details', indexResult);
+        res.render('post-details', {
+            ...result,
+            target_post:target_post[0],
+            currentPage: page,
+            totalPages: Math.ceil(result.post.totalCount / limit),
+            showRecent: true
         });
-    });
+
+
+    } catch (error) {
+        console.error('Route error:', error);
+        res.sendStatus(500);
+    }
+    
+    
 });
-
-
-
-
 
 module.exports = router;

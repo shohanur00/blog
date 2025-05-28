@@ -39,6 +39,8 @@ router.get('/:id', (req, res) => {
                 showRecent: false
             };
 
+            //console.log(resultData)
+
             console.log('Rendering post-list with data:', resultData);
             res.render('post-list', resultData);
         });

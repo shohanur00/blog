@@ -1,6 +1,6 @@
 <main class="col-md-8">
 
-	<% post.forEach(item => { %>
+	<% post.post.forEach(item => { %>
 	<article class="post post-1">
 		<header class="entry-header">
 			<h1 class="entry-title">
@@ -31,20 +31,37 @@
 	<!-- Pagination -->
 	<nav aria-label="Page navigation" class="text-center">
 		<ul class="pagination">
-		<li>
-			<a href="#" aria-label="Previous">
-			<span aria-hidden="true">&laquo;</span>
-			</a>
-		</li>
-		<li class="active"><a href="index.html">1</a></li>
-		<li><a href="page2.html">2</a></li>
-		<li><a href="page3.html">3</a></li>
-		<li>
-			<a href="page2.html" aria-label="Next">
-			<span aria-hidden="true">&raquo;</span>
-			</a>
-		</li>
+			<% if (currentPage > 1) { %>
+			<li>
+				<a href="?page=<%= currentPage - 1 %>" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			<% } else { %>
+			<li class="disabled">
+				<span aria-hidden="true">&laquo;</span>
+			</li>
+			<% } %>
+
+			<% for (let i = 1; i <= totalPages; i++) { %>
+			<li class="<%= currentPage === i ? 'active' : '' %>">
+				<a href="?page=<%= i %>"><%= i %></a>
+			</li>
+			<% } %>
+
+			<% if (currentPage < totalPages) { %>
+			<li>
+				<a href="?page=<%= currentPage + 1 %>" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+			<% } else { %>
+			<li class="disabled">
+				<span aria-hidden="true">&raquo;</span>
+			</li>
+			<% } %>
 		</ul>
 	</nav>
+
 	<!-- Pagination End -->
 </main>

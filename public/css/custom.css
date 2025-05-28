@@ -803,6 +803,34 @@ figure {
 
 
 
+  .pagination > li > a,
+  .pagination > li > span {
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+  }
+
+  .pagination > .active > a,
+  .pagination > .active > span,
+  .pagination > .active > a:focus,
+  .pagination > .active > a:hover {
+    background-color: black;
+    color: white;
+    border-color: black;
+  }
+
+  .pagination > li > a:hover {
+    background-color: #f0f0f0;
+    color: black;
+  }
+
+  .pagination > .disabled > a,
+  .pagination > .disabled > span {
+    color: #999;
+    background-color: white;
+    border-color: black;
+  }
+
 /**
  * 11.0 - Media Query
  */
