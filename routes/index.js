@@ -4,7 +4,7 @@ const indexModel = require('../models/index');
 
 router.get('/', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
-    const limit = 10;
+    const limit = 8;
     const offset = (page - 1) * limit;
 
     try {
