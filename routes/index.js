@@ -9,8 +9,9 @@ router.get('/', async (req, res) => {
 
     try {
         const result = await indexModel.getIndexData({ limit, offset });
-        //console.log(result);
+        console.log(result.archive);
 
+        //console.log(result);
         res.render('index', {
             ...result,
             currentPage: page,

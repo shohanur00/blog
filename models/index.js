@@ -30,18 +30,59 @@ const getPost = async ({ limit, offset }) => {
     };
 };
 
+const getRecentPost = async ({ limit }) => {
+    const postSql = `
+        SELECT id, title 
+        FROM public."posts"
+        ORDER BY time DESC
+        LIMIT $1 ;
+    `;
+    //const countSql = 'SELECT COUNT(*) FROM public."posts";';
+
+    const postsResult = await db.query(postSql, [limit]);
+    //const countResult = await db.query(countSql);
+
+    return {
+        post: postsResult.rows
+    };
+};
+
+
+const getArchive = async () => {
+    const postSql = `
+        SELECT DISTINCT 
+        TO_CHAR(time, 'Month') AS month_name,
+        EXTRACT(YEAR FROM time) AS year,
+        EXTRACT(MONTH FROM time) AS month_num
+        FROM posts
+        ORDER BY year, month_num;
+    `;
+    //const countSql = 'SELECT COUNT(*) FROM public."posts";';
+
+    const postsResult = await db.query(postSql);
+    //const countResult = await db.query(countSql);
+
+    return {
+        archive: postsResult.rows
+    };
+};
+
 const getIndexData = async ({ limit, offset }) => {
     try {
-        const [author, post, category] = await Promise.all([
+        const [author, post, category,recentPost, archive] = await Promise.all([
             getAuthor(),
             getPost({ limit, offset }),
-            getCategory()
+            getCategory(),
+            getRecentPost({ limit}),
+            getArchive()
         ]);
 
         return {
             author,
             post,
-            category
+            category,
+            recentPost,
+            archive
         };
     } catch (error) {
         console.error('Error in getIndexData:', error);

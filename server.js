@@ -32,6 +32,7 @@ const searchRouter = require('./routes/search-result')
 const searchNotRouter = require('./routes/search-not-found')
 const tagsRouter = require('./routes/tags')
 const catRouter = require('./routes/category')
+const archiveRouter = require('./routes/archive')
 
  
 
@@ -59,6 +60,7 @@ app.use('/category',catRouter)
 app.use('/privacy',privacyPolicyRouter)
 app.use('/posts',postDetailsRouter)
 app.use('/search',searchRouter)
+app.use('/archive',archiveRouter)
 app.use(error404)
 
  

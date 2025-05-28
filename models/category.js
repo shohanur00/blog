@@ -31,18 +31,40 @@ const getPost = async ({ catid,limit, offset }) => {
     };
 };
 
+
+const getArchive = async () => {
+    const postSql = `
+        SELECT DISTINCT 
+        TO_CHAR(time, 'Month') AS month_name,
+        EXTRACT(YEAR FROM time) AS year,
+        EXTRACT(MONTH FROM time) AS month_num
+        FROM posts
+        ORDER BY year, month_num;
+    `;
+    //const countSql = 'SELECT COUNT(*) FROM public."posts";';
+
+    const postsResult = await db.query(postSql);
+    //const countResult = await db.query(countSql);
+
+    return {
+        archive: postsResult.rows
+    };
+};
+
 const getIndexData = async ({ catid,limit, offset }) => {
     try {
-        const [author, post, category] = await Promise.all([
+        const [author, post, category,archive] = await Promise.all([
             getAuthor(),
             getPost({ catid,limit, offset }),
-            getCategory()
+            getCategory(),
+            getArchive()
         ]);
 
         return {
             author,
             post,
-            category
+            category,
+            archive
         };
     } catch (error) {
         console.error('Error in getIndexData:', error);

@@ -6,7 +6,7 @@ router.get('/:id', async (req, res) => {
 
     const authid = req.params.id;
     const page = parseInt(req.query.page) || 1;
-    const limit = 10;
+    const limit = 8;
     const offset = (page - 1) * limit;
 
     try {
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
             }
         }
 
-        console.log(result.post)
+        //console.log(result.post)
         res.render('post-list', {
             ...result,
             target_text: targetText,
