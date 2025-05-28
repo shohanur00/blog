@@ -1,50 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const postModel = require('../models/post-details');
-const indexModel = require('../models/index');
-const catModel = require('../models/category')
+const catModel = require('../models/category');
 
-router.get('/:id', (req, res) => {
-    const catId = req.params.id;
-    console.log(`Fetching post for category ID: ${catId}`);
+router.get('/:id', async (req, res) => {
 
-    indexModel.getIndexData((indexErr, indexResult) => {
-        if (indexErr) {
-            console.error('Error fetching index data:', indexErr);
-            return res.status(500).send('Server error loading index data');
+    const catid = req.params.id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const offset = (page - 1) * limit;
+
+    try {
+        const result = await catModel.getIndexData({ catid,limit, offset });
+        //console.log(result);
+
+        let targetText = '';
+        if (Array.isArray(result.author)) {
+            const matched = result.category.find(element => element.id == catid);
+            if (matched) {
+                targetText = matched.name;
+            }
         }
-
-        catModel.getCat(catId, (postErr, getData) => {
-            if (postErr) {
-                console.error('Error fetching post:', postErr);
-                return res.status(500).send('Server error loading post');
-            }
-
-            if (!getData || getData.length === 0) {
-                return res.status(404).send('Post not found');
-            }
-
-            let targetText = '';
-            if (Array.isArray(indexResult.category)) {
-                const matched = indexResult.category.find(element => element.id == catId);
-                if (matched) {
-                    targetText = matched.name;
-                }
-            }
-
-            const resultData = {
-                ...indexResult,
-                target_text: targetText,
-                post: getData,
-                showRecent: false
-            };
-
-            //console.log(resultData)
-
-            console.log('Rendering post-list with data:', resultData);
-            res.render('post-list', resultData);
+        res.render('post-list', {
+            ...result,
+            target_text: targetText,
+            currentPage: page,
+            totalPages: Math.ceil(result.post.totalCount / limit),
+            showRecent: false
         });
-    });
+
+         //res.render('index',result)
+    } catch (error) {
+        console.error('Route error:', error);
+        res.sendStatus(500);
+    }
 });
 
 module.exports = router;
