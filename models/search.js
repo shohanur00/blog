@@ -14,8 +14,8 @@ const getCategory = async () => {
 
 const getPost = async ({ authid,limit, offset }) => {
     console.log(authid)
-    const postSql = "SELECT id, title, author, time, summary, catagory, catid, author_id FROM public.posts WHERE search_vector @@ to_tsquery('english', $1) ORDER BY time DESC LIMIT $2 OFFSET $3;";
-    const countSql = "SELECT COUNT(*) FROM public.posts WHERE search_vector @@ to_tsquery('english', $1);";
+    const postSql = "SELECT id, title, author, time, summary, catagory, catid, author_id  FROM public.posts  WHERE search_vector @@ plainto_tsquery('simple', $1) ORDER BY time DESC LIMIT $2 OFFSET $3;";
+    const countSql = "SELECT COUNT(*) FROM public.posts WHERE search_vector @@ plainto_tsquery('simple', $1);";
 
     const postsResult = await db.query(postSql, [authid,limit, offset]);
     const countResult = await db.query(countSql,[authid]);
