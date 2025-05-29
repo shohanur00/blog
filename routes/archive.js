@@ -39,7 +39,7 @@ router.get('/:month/:year', async (req, res) => {
                 target_text: targetText,
                 currentPage: page,
                 totalPages: Math.ceil(result.post.totalCount / limit),
-                showRecent: false
+                showRecent: true
             });
     
              //res.render('index',result)
