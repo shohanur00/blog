@@ -13,14 +13,9 @@ const getCategory = async () => {
 };
 
 const getPost = async ({ authid,limit, offset }) => {
-    const postSql = `
-        SELECT id, title, author, time, summary, catagory, catid, author_id
-        FROM public."posts"
-        WHERE author_id = $1
-        ORDER BY time DESC
-        LIMIT $2 OFFSET $3;
-    `;
-    const countSql = 'SELECT COUNT(*) FROM public."posts" WHERE author_id = $1;';
+    console.log(authid)
+    const postSql = "SELECT id, title, author, time, summary, catagory, catid, author_id FROM public.posts WHERE search_vector @@ to_tsquery('english', $1) ORDER BY time DESC LIMIT $2 OFFSET $3;";
+    const countSql = "SELECT COUNT(*) FROM public.posts WHERE search_vector @@ to_tsquery('english', $1);";
 
     const postsResult = await db.query(postSql, [authid,limit, offset]);
     const countResult = await db.query(countSql,[authid]);
@@ -31,23 +26,6 @@ const getPost = async ({ authid,limit, offset }) => {
     };
 };
 
-
-const getRecentPost = async ({ limit }) => {
-    const postSql = `
-        SELECT id, title 
-        FROM public."posts"
-        ORDER BY time DESC
-        LIMIT $1 ;
-    `;
-    //const countSql = 'SELECT COUNT(*) FROM public."posts";';
-
-    const postsResult = await db.query(postSql, [limit]);
-    //const countResult = await db.query(countSql);
-
-    return {
-        post: postsResult.rows
-    };
-};
 
 const getArchive = async () => {
     const postSql = `
@@ -70,20 +48,18 @@ const getArchive = async () => {
 
 const getIndexData = async ({ authid,limit, offset }) => {
     try {
-        const [author, post, category,archive,recentPost] = await Promise.all([
+        const [author, post, category,archive] = await Promise.all([
             getAuthor(),
             getPost({ authid,limit, offset }),
             getCategory(),
-            getArchive(),
-            getRecentPost({limit})
+            getArchive()
         ]);
 
         return {
             author,
             post,
             category,
-            archive,
-            recentPost
+            archive
         };
     } catch (error) {
         console.error('Error in getIndexData:', error);

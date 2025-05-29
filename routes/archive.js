@@ -31,16 +31,9 @@ router.get('/:month/:year', async (req, res) => {
 
             const monthName = monthNames[month - 1];
             
-            //const banglaYear = numBang(year)
+         
             let targetText = monthName+' '+year;
-            // if (Array.isArray(result.author)) {
-            //     const matched = result.author.find(element => element.id == authid);
-            //     if (matched) {
-            //         targetText = matched.name;
-            //     }
-            // }
-    
-            //console.log(result.post)
+       
             res.render('post-list', {
                 ...result,
                 target_text: targetText,
