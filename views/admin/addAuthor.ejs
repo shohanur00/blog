@@ -1,0 +1,62 @@
+<div class="content-body py-4">
+    <div class="container">
+      <div class="row">
+        
+        <%- include('blocks/side_menu.ejs') %>
+  
+        <main class="col-md-8">
+          <div class="card shadow-sm border-0">
+            <div class="card-header bg-dark text-white text-center rounded-top">
+              <h5 class="mb-0">➕ নতুন লেখক অ্যাড করুন</h5>
+            </div>
+            <div class="card-body bg-light">
+              <form action="#" method="post">
+                
+                <div class="form-group mb-3">
+                  <label for="authorName">👤 লেখকের নাম</label>
+                  <input 
+                    type="text" 
+                    class="form-control shadow-sm" 
+                    id="authorName" 
+                    name="authorName" 
+                    placeholder="লেখকের নাম দিন" 
+                    required>
+                </div>
+  
+                <div class="form-group mb-3">
+                  <label for="designation">💼 লেখকের পদবি</label>
+                  <input 
+                    type="text" 
+                    class="form-control shadow-sm" 
+                    id="designation" 
+                    name="designation" 
+                    placeholder="পদবি দিন" 
+                    required>
+                </div>
+  
+                <div class="form-group mb-4">
+                  <label for="bio">📝 পরিচিতি</label>
+                  <textarea 
+                    class="form-control shadow-sm" 
+                    id="bio" 
+                    name="bio" 
+                    rows="4" 
+                    placeholder="লেখকের সংক্ষিপ্ত পরিচিতি লিখুন" 
+                    required></textarea>
+                </div>
+  
+                <div class="text-center">
+                  <button type="submit" class="btn btn-success px-5 py-2 shadow-sm">
+                    ✅ সাবমিট করুন
+                  </button>
+                </div>
+  
+              </form>
+            </div>
+          </div>
+        </main>
+  
+      </div>
+    </div>
+  </div>
+  

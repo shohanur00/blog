@@ -1,0 +1,53 @@
+<div class="content-body py-4">
+    <div class="container">
+      <div class="row">
+        
+        <%- include('blocks/side_menu.ejs') %>
+  
+        <main class="col-md-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white text-center">
+              <h5 class="mb-0">➕ নতুন ইউজার অ্যাড করুন</h5>
+            </div>
+            <div class="card-body">
+              <form action="#" method="post">
+                <div class="form-group">
+                  <label for="username">👤 ইউজারনেম</label>
+                  <input type="text" class="form-control" id="username" name="username" placeholder="ইউজারনেম দিন" required>
+                </div>
+  
+                <div class="form-group">
+                  <label for="email">📧 ইমেইল</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="ইমেইল দিন" required>
+                </div>
+  
+                <div class="form-group">
+                  <label for="password">🔒 পাসওয়ার্ড</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="পাসওয়ার্ড দিন" required>
+                </div>
+  
+                <div class="form-group">
+                  <label for="role">🛡️ রোল নির্বাচন করুন</label>
+                  <select class="form-control" id="role" name="role">
+                    <option value="admin">অ্যাডমিন</option>
+                    <option value="editor">এডিটর</option>
+                  </select>
+                </div>
+  
+                <div class="text-center">
+                  <button type="submit" class="btn btn-success px-4">✅ সাবমিট করুন</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </main>
+  
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
+  
