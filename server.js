@@ -44,9 +44,18 @@ app.set('layout','layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "script-src": ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"]
+      }
+    }
+  })
+);
  
-
+ 
 
 app.set('trust proxy', 1); // Trust first proxy
 app.use(cookieParser());

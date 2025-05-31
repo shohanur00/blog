@@ -1,3 +1,15 @@
+<% if (message == 0) { %>
+    <div class="alert alert-danger" role="alert">
+      <p>ইউজার যোগ ব্যর্থ হয়েছে !</p>
+    </div>
+  <% } else if (message == 1) { %>
+    <div class="alert alert-success" role="alert">
+      <p>ইউজার যোগ সফল হয়েছে !</p> 
+    </div>
+  <% } %>
+  
+
+
 <div class="content-body py-4">
     <div class="container">
       <div class="row">
@@ -10,7 +22,7 @@
               <h5 class="mb-0">➕ নতুন ইউজার অ্যাড করুন</h5>
             </div>
             <div class="card-body">
-              <form action="#" method="post">
+              <form action="/admin/dashboard/adduser" method="post">
                 <div class="form-group">
                   <label for="username">👤 ইউজারনেম</label>
                   <input type="text" class="form-control" id="username" name="username" placeholder="ইউজারনেম দিন" required>
@@ -29,8 +41,8 @@
                 <div class="form-group">
                   <label for="role">🛡️ রোল নির্বাচন করুন</label>
                   <select class="form-control" id="role" name="role">
-                    <option value="admin">অ্যাডমিন</option>
-                    <option value="editor">এডিটর</option>
+                    <option value="0">অ্যাডমিন</option>
+                    <option value="1">এডিটর</option>
                   </select>
                 </div>
   

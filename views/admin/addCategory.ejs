@@ -1,3 +1,13 @@
+<% if (message == 0) { %>
+    <div class="alert alert-danger" role="alert">
+      <p>ক্যাটাগরি যোগ ব্যর্থ হয়েছে !</p>
+    </div>
+  <% } else if (message == 1) { %>
+    <div class="alert alert-success" role="alert">
+      <p>ক্যাটাগরি যোগ সফল হয়েছে !</p> 
+    </div>
+  <% } %>
+
 <div class="content-body py-4">
     <div class="container">
       <div class="row">

@@ -1,0 +1,69 @@
+<!-- Summernote CSS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+
+<!-- jQuery and Summernote JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+
+<div class="content-body py-4">
+  <div class="container">
+    <div class="row">
+      <%- include('blocks/side_menu.ejs') %>
+
+      <main class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-dark text-white text-center">
+            <h5 class="mb-0">➕ নতুন পোস্ট অ্যাড করুন</h5>
+          </div>
+          <div class="card-body">
+            <form action="#" method="post">
+              <div class="form-group">
+                <label for="username">👤 টাইটেল</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="ইউজারনেম দিন" required>
+              </div>
+
+              <div class="form-group">
+                <label for="category">🛡️ ক্যাটাগরি</label>
+                <select class="form-control" id="category" name="category">
+                  <option value="aqidah">আকিদা</option>
+                  <option value="manhaj">মানহাজ</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="author">🛡️ লেখক</label>
+                <select class="form-control" id="author" name="author">
+                  <option value="aiman">হাকিমুল উম্মাহ শায়খ আইমান</option>
+                  <option value="maqdisi">শায়খ আবু মুহাম্মাদ আল মাকদিসি</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-4">
+                <label for="bio">📝 সারাংস</label>
+                <textarea 
+                  class="form-control shadow-sm" 
+                  id="bio" 
+                  name="bio" 
+                  rows="4" 
+                  placeholder=" কন্টেন্ট এর সারাংস লিখুন..." 
+                  required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="summernote">📄 কনটেন্ট</label>
+                <textarea id="summernote" name="content"></textarea>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-success px-4">✅ সাবমিট করুন</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- External JS to init Summernote -->
+<script src="/js/summernote-init.js"></script>

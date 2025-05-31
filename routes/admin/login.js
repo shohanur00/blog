@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const loginModel = require('../../models/admin/login');
 const requireAdminAuth = require('../../middleware/auth')
+const addUserModel = require('../../models/admin/user')
+const addCategoryModel = require('../../models/admin/category')
+
 
 // Middleware to protect admin routes
 router.get('/', (req, res) => {
@@ -55,16 +58,50 @@ router.get('/', (req, res) => {
 
 
   router.get('/dashboard/adduser', requireAdminAuth, (req, res) => {
-    res.render('admin/addUser', { user: req.session.user });
+    res.render('admin/addUser', { user: req.session.user,message: 2 });
   });
 
 
   router.get('/dashboard/addcategory', requireAdminAuth, (req, res) => {
-    res.render('admin/addCategory', { user: req.session.user });
+    res.render('admin/addCategory', { user: req.session.user,message: 2  }); 
   });
 
   router.get('/dashboard/addauthor', requireAdminAuth, (req, res) => {
     res.render('admin/addAuthor', { user: req.session.user });
   });
+
+  router.get('/dashboard/addpost', requireAdminAuth, (req, res) => {
+    res.render('admin/addPost', { user: req.session.user });
+  });
+
+
+
+  router.post('/dashboard/adduser', requireAdminAuth, (req, res) => {
+    const {username,email,password,role} = req.body;
+    const result = addUserModel.CreateUser({username,email,password,role});
+    
+    if(result){
+        res.render('admin/addUser', { user: req.session.user, message: 1});
+    }
+    else{
+        res.render('admin/addUser', { user: req.session.user, message: 0});
+    }
+  });
+
+
+  router.post('/dashboard/addcategory', requireAdminAuth, (req, res) => {
+    const {category} = req.body;
+    const result = addCategoryModel.CreateCategory({category});
+    if(result){
+        res.render('admin/addCategory', { user: req.session.user, message: 1});
+    }
+    else{
+        res.render('admin/addCategory', { user: req.session.user, message: 0});
+    }
+  });
+
+
+
+
 
 module.exports = router;
