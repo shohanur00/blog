@@ -1,3 +1,14 @@
+<% if (message == 0) { %>
+    <div class="alert alert-danger" role="alert">
+      <p style="text-align: center;">লেখক যোগ ব্যর্থ হয়েছে ! অন্য কোন নাম ব্যবহার করুন ।</p>
+    </div>
+  <% } else if (message == 1) { %>
+    <div class="alert alert-success" role="alert">
+      <p style="text-align: center;">লেখক যোগ সফল হয়েছে !</p> 
+    </div>
+  <% } %>
+
+
 <div class="content-body py-4">
     <div class="container">
       <div class="row">
@@ -10,7 +21,7 @@
               <h5 class="mb-0">➕ নতুন লেখক অ্যাড করুন</h5>
             </div>
             <div class="card-body bg-light">
-              <form action="#" method="post">
+              <form action="/admin/dashboard/addauthor" method="post">
                 
                 <div class="form-group mb-3">
                   <label for="authorName">👤 লেখকের নাম</label>

@@ -4,6 +4,9 @@ const loginModel = require('../../models/admin/login');
 const requireAdminAuth = require('../../middleware/auth')
 const addUserModel = require('../../models/admin/user')
 const addCategoryModel = require('../../models/admin/category')
+const addAuthorModel = require('../../models/admin/author')
+const addPostModel = require('../../models/admin/post')
+
 
 
 // Middleware to protect admin routes
@@ -67,13 +70,25 @@ router.get('/', (req, res) => {
   });
 
   router.get('/dashboard/addauthor', requireAdminAuth, (req, res) => {
-    res.render('admin/addAuthor', { user: req.session.user });
+    res.render('admin/addAuthor', { user: req.session.user,message: 2  });
   });
 
-  router.get('/dashboard/addpost', requireAdminAuth, (req, res) => {
-    res.render('admin/addPost', { user: req.session.user });
+  
+  router.get('/dashboard/addpost', requireAdminAuth, async (req, res) => {
+    try {
+      const fetch_data = await addPostModel.fetchPostmaterials();
+      console.log(fetch_data.author)
+      res.render('admin/addPost', {
+        user: req.session.user,
+        author: fetch_data.author,
+        category: fetch_data.category
+      });
+    } catch (error) {
+      console.error('Error loading add post page:', error);
+      res.status(500).send('Internal Server Error');
+    }
   });
-
+  
 
 
 router.post('/dashboard/adduser', requireAdminAuth, async (req, res) => {
@@ -114,6 +129,49 @@ router.post('/dashboard/addcategory', requireAdminAuth, async (req, res) => {
 });
 
 
+
+router.post('/dashboard/addauthor', requireAdminAuth, async (req, res) => {
+    const { authorName, designation, bio } = req.body;
+    console.log(authorName);
+  
+    try {
+      const result = await addAuthorModel.CreateAuthor({ authorName, designation, bio });
+  
+      if (result) {
+        // Successfully inserted
+        res.render('admin/addAuthor', { user: req.session.user, message: 1 });
+      } else {
+        // Author already exists
+        res.render('admin/addAuthor', { user: req.session.user, message: 0 });
+      }
+    } catch (error) {
+      console.error('Error adding author:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+
+  router.post('/dashboard/addpost', requireAdminAuth, async (req, res) => {
+    const { title, category , author, summary, content } = req.body;
+    console.log(summary);
+  
+    try {
+      const result = await addPostModel.CreatePost({ title, category , author, summary, content });
+  
+      if (result) {
+        // Successfully inserted
+        res.render('admin/addPost', { user: req.session.user, message: 1 });
+      } else {
+        // Author already exists
+        res.render('admin/addPost', { user: req.session.user, message: 0 });
+      }
+    } catch (error) {
+      console.error('Error adding author:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  
 
 
 

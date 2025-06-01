@@ -16,25 +16,27 @@
             <h5 class="mb-0">➕ নতুন পোস্ট অ্যাড করুন</h5>
           </div>
           <div class="card-body">
-            <form action="#" method="post">
+            <form action="/admin/dashboard/addpost" method="post">
               <div class="form-group">
-                <label for="username">👤 টাইটেল</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="ইউজারনেম দিন" required>
+                <label for="title">👤 টাইটেল</label>
+                <input type="text" class="form-control" id="username" name="title" placeholder="ইউজারনেম দিন" required>
               </div>
 
               <div class="form-group">
                 <label for="category">🛡️ ক্যাটাগরি</label>
                 <select class="form-control" id="category" name="category">
-                  <option value="aqidah">আকিদা</option>
-                  <option value="manhaj">মানহাজ</option>
+                    <% category.forEach(function(item) { %>
+                        <option value="<%= item.id %>"><%= item.name %></option>
+                    <% }); %>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="author">🛡️ লেখক</label>
                 <select class="form-control" id="author" name="author">
-                  <option value="aiman">হাকিমুল উম্মাহ শায়খ আইমান</option>
-                  <option value="maqdisi">শায়খ আবু মুহাম্মাদ আল মাকদিসি</option>
+                    <% author.forEach(function(author) { %>
+                        <option value="<%= author.id %>"><%= author.name %></option>
+                    <% }); %>
                 </select>
               </div>
 
@@ -43,7 +45,7 @@
                 <textarea 
                   class="form-control shadow-sm" 
                   id="bio" 
-                  name="bio" 
+                  name="summary" 
                   rows="4" 
                   placeholder=" কন্টেন্ট এর সারাংস লিখুন..." 
                   required></textarea>
