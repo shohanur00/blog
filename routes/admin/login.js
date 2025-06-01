@@ -76,29 +76,43 @@ router.get('/', (req, res) => {
 
 
 
-  router.post('/dashboard/adduser', requireAdminAuth, (req, res) => {
-    const {username,email,password,role} = req.body;
-    const result = addUserModel.CreateUser({username,email,password,role});
-    
-    if(result){
-        res.render('admin/addUser', { user: req.session.user, message: 1});
+router.post('/dashboard/adduser', requireAdminAuth, async (req, res) => {
+  const { username, email, password, role } = req.body;
+
+  try {
+    const result = await addUserModel.CreateUser({ username, email, password, role });
+
+    if (result) {
+      res.render('admin/addUser', { user: req.session.user, message: 1 });
+    } else {
+      res.render('admin/addUser', { user: req.session.user, message: 0 });
     }
-    else{
-        res.render('admin/addUser', { user: req.session.user, message: 0});
-    }
-  });
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.render('admin/addUser', { user: req.session.user, message: 0 });
+  }
+});
 
 
-  router.post('/dashboard/addcategory', requireAdminAuth, (req, res) => {
-    const {category} = req.body;
-    const result = addCategoryModel.CreateCategory({category});
-    if(result){
-        res.render('admin/addCategory', { user: req.session.user, message: 1});
+router.post('/dashboard/addcategory', requireAdminAuth, async (req, res) => {
+  const { category } = req.body;
+
+  try {
+    const result = await addCategoryModel.CreateCategory({ category });
+
+    if (result) {
+      // Successfully inserted
+      res.render('admin/addCategory', { user: req.session.user, message: 1 });
+    } else {
+      // Category already exists
+      res.render('admin/addCategory', { user: req.session.user, message: 0 });
     }
-    else{
-        res.render('admin/addCategory', { user: req.session.user, message: 0});
-    }
-  });
+  } catch (error) {
+    console.error('Error adding category:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 
