@@ -153,24 +153,33 @@ router.post('/dashboard/addauthor', requireAdminAuth, async (req, res) => {
 
   router.post('/dashboard/addpost', requireAdminAuth, async (req, res) => {
     const { title, category , author, summary, content } = req.body;
-    console.log(summary);
   
     try {
-      const result = await addPostModel.CreatePost({ title, category , author, summary, content });
+      const result = await addPostModel.CreatePost({ title, category, author, summary, content });
+  
+      const fetch_data = await addPostModel.fetchPostmaterials(); // to refill dropdowns
   
       if (result) {
-        // Successfully inserted
-        res.render('admin/addPost', { user: req.session.user, message: 1 });
+        res.render('admin/addPost', {
+          user: req.session.user,
+          category: fetch_data.category,
+          author: fetch_data.author,
+          message: 1
+        });
       } else {
-        // Author already exists
-        res.render('admin/addPost', { user: req.session.user, message: 0 });
+        res.render('admin/addPost', {
+          user: req.session.user,
+          category: fetch_data.category,
+          author: fetch_data.author,
+          message: 0
+        });
       }
     } catch (error) {
-      console.error('Error adding author:', error);
+      console.error('Error adding post:', error);
       res.status(500).send('Internal Server Error');
     }
   });
-
+  
   
 
 
