@@ -81,7 +81,8 @@ router.get('/', (req, res) => {
       res.render('admin/addPost', {
         user: req.session.user,
         author: fetch_data.author,
-        category: fetch_data.category
+        category: fetch_data.category,
+        message: 2
       });
     } catch (error) {
       console.error('Error loading add post page:', error);
@@ -153,9 +154,10 @@ router.post('/dashboard/addauthor', requireAdminAuth, async (req, res) => {
 
   router.post('/dashboard/addpost', requireAdminAuth, async (req, res) => {
     const { title, category , author, summary, content } = req.body;
+    const postman_id = req.session.user.id
   
     try {
-      const result = await addPostModel.CreatePost({ title, category, author, summary, content });
+      const result = await addPostModel.CreatePost({ title, category, author, summary, content,postman_id });
   
       const fetch_data = await addPostModel.fetchPostmaterials(); // to refill dropdowns
   

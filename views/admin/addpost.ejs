@@ -1,3 +1,13 @@
+<% if (message == 0) { %>
+  <div class="alert alert-danger" role="alert">
+    <p style="text-align: center;">পোস্ট যোগ ব্যর্থ হয়েছে ! অন্য কোন নাম ব্যবহার করুন ।</p>
+  </div>
+<% } else if (message == 1) { %>
+  <div class="alert alert-success" role="alert">
+    <p style="text-align: center;">পোস্ট যোগ সফল হয়েছে !</p> 
+  </div>
+<% } %>
+
 <!-- Summernote CSS -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
 
