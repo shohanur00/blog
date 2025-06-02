@@ -261,6 +261,22 @@ router.post('/dashboard/addauthor', requireAdminAuth, async (req, res) => {
   });
 
 
+  router.get('/dashboard/deleteuser', requireAdminAuth, async (req, res) => {
+    try {
+      const users = await addUserModel.getAllUsers();
+  
+      res.render('admin/view-user', {
+        user: users, // pass users as `user` to match your EJS
+        showRecent: true
+      });
+    } catch (error) {
+      console.error('Route error:', error);
+      res.sendStatus(500);
+    }
+  });
+  
+
+
   router.get('/dashboard/deletepost/:id', requireAdminAuth, async (req, res) => {
     const postId = req.params.id;
   
@@ -320,6 +336,38 @@ router.post('/dashboard/addauthor', requireAdminAuth, async (req, res) => {
     }
 });
 
+
+
+router.get('/dashboard/deleteuser/:id', requireAdminAuth, async (req, res) => {
+
+    const userId = req.params.id;
+    try {
+        const result = await addUserModel.deleteUser(userId);
+        if (result) {
+            res.redirect('/admin/dashboard/deleteuser');
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.sendStatus(500);
+    }
+});
+
+
+router.get('/dashboard/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Session destroy error:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    // Clear the session cookie (optional but good practice)
+    res.clearCookie('connect.sid'); // change 'connect.sid' if your cookie name differs
+
+    res.redirect('/admin');
+  });
+});
 
 
 module.exports = router;

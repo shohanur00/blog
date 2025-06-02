@@ -1,0 +1,55 @@
+<div class="content-body py-4">
+    <div class="container">
+      <div class="row">
+  
+        <%- include('blocks/side_menu.ejs') %>
+  
+        <div class="card shadow-lg border-0 rounded mb-4">
+          <div class="card-body p-0">
+  
+            <% if (Array.isArray(user) && user.length > 0) { %>
+              <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                  <thead class="table-light text-center">
+                    <tr>
+                      <th>📁 User Name</th>
+                      <th>📧 Email</th>
+                      <th style="text-align: center;">🛠️ Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% user.forEach(item => { %>
+                      <tr>
+                        <td>
+                          <i class="bi bi-folder-fill text-warning me-1"></i>
+                          <%= item.username %>
+                        </td>
+                        <td>
+                          <i class="bi bi-envelope-fill text-primary me-1"></i>
+                          <%= item.email %>
+                        </td>
+                        <td class="text-center">
+                          <a href="/admin/dashboard/deleteuser/<%= item.id %>" 
+                             class="btn btn-sm btn-danger shadow-sm px-3"
+                             onclick="return confirm('Are you sure you want to delete this user?');">
+                            <i class="bi bi-trash3-fill me-1"></i>Delete
+                          </a>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            <% } else { %>
+              <div class="alert alert-warning text-center m-3 rounded shadow-sm">
+                <h6 class="mb-0">⚠️ কোনো ইউজার পাওয়া যায় নি।</h6>
+              </div>
+            <% } %>
+  
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  

@@ -36,7 +36,29 @@ const CreateUser = async ({ username, email, password, role }) => {
 };
 
 
+const getAllUsers = async () => {
+  try {
+    const result = await db.query('SELECT id, username, email FROM "user" ORDER BY id DESC');
+    return result.rows;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw error;
+  }
+};
 
 
 
-module.exports = { CreateUser };
+const deleteUser = async (userId) => {
+  try {
+    const result = await db.query('DELETE FROM "user" WHERE id = $1 RETURNING *', [userId]);
+    return result.rows[0];
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    throw error;
+  }
+};
+
+
+
+
+module.exports = { CreateUser, getAllUsers, deleteUser };
