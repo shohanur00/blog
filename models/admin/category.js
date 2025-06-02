@@ -30,6 +30,29 @@ const CreateCategory = async ({ category }) => {
 };
 
 
+const { pool } = require('../db');
+
+const deleteCategory = async (categoryId) => {
+  const client = await pool.connect(); // ✅ use pool.connect()
+
+  try {
+    await client.query('BEGIN');
+    await client.query('DELETE FROM posts WHERE catid = $1', [categoryId]);
+    const result = await client.query(
+      'DELETE FROM catagory WHERE id = $1 RETURNING *',
+      [categoryId]
+    );
+    await client.query('COMMIT');
+    return result.rows[0];
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Error deleting category:', error);
+    throw error;
+  } finally {
+    client.release(); // always release the client
+  }
+};
 
 
-module.exports = { CreateCategory };
+
+module.exports = { CreateCategory,deleteCategory};

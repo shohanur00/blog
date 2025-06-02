@@ -261,14 +261,64 @@ router.post('/dashboard/addauthor', requireAdminAuth, async (req, res) => {
   });
 
 
-  router.get('/dashboard/deletepost/:id',requireAdminAuth, async (req, res) => {
-      
-      const postId = req.params.id;
-
-      
+  router.get('/dashboard/deletepost/:id', requireAdminAuth, async (req, res) => {
+    const postId = req.params.id;
+  
+    try {
+      const result = await addPostModel.deletePost(postId);
+  
+      if (!result) {
+        console.warn(`Post with ID ${postId} not found or already deleted.`);
+        return res.status(404).send('Post not found');
+      }
+  
+      res.redirect('/admin/dashboard/deletepost');
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
   
 
+
+  router.get('/dashboard/deletecategory/:id', requireAdminAuth, async (req, res) => {
+    const categoryId = req.params.id;
+  
+    console.log('Deleting category with ID:', categoryId);
+    try {
+      const result = await addCategoryModel.deleteCategory(categoryId);
+  
+      if (!result) {
+        console.warn(`Category with ID ${categoryId} not found or already deleted.`);
+        return res.status(404).send('Category not found');
+      }
+  
+      res.redirect('/admin/dashboard/deletecategory');
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      res.sendStatus(500);
+    }
   });
+  
+
+
+
+  router.get('/dashboard/deleteauthor/:id', requireAdminAuth, async (req, res) => {
+    const authorId = req.params.id;
+
+    try {
+        const result = await addAuthorModel.deleteAuthor(authorId);
+
+        if (result) {
+            res.redirect('/admin/dashboard/deleteauthor');
+        } else {
+            res.status(404).send('Author not found');
+        }
+    } catch (error) {
+        console.error('Error deleting author:', error);
+        res.sendStatus(500);
+    }
+});
 
 
 

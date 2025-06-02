@@ -32,7 +32,31 @@ const CreateAuthor = async ({ authorName, designation, bio }) => {
   
   
 
+  const { pool } = require('../db');
+  const deleteAuthor = async (authorId) => {
+    const client = await pool.connect();
+  
+    try {
+      await client.query('BEGIN');
+  
+      // Delete posts by this author first
+      await client.query('DELETE FROM posts WHERE author_id = $1', [authorId]);
+  
+      // Then delete the author
+      const result = await client.query('DELETE FROM author WHERE id = $1 RETURNING *', [authorId]);
+  
+      await client.query('COMMIT');
+  
+      return result.rows[0];
+    } catch (error) {
+      await client.query('ROLLBACK');
+      console.error('Error deleting author:', error);
+      throw error;
+    } finally {
+      client.release();
+    }
+  };
+  
 
 
-
-module.exports = { CreateAuthor };
+module.exports = { CreateAuthor,deleteAuthor };

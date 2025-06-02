@@ -65,7 +65,19 @@ const fetchPostmaterials = async () => {
     }
   };
   
+
+  const deletePost = async (postId) => {
+    try {
+      const deleteSql = 'DELETE FROM posts WHERE id = $1 RETURNING *';
+      const result = await db.query(deleteSql, [postId]);
+      return result.rows[0]; // returns the deleted post or undefined if not found
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      throw error;
+    }
+  };
+  
   
   
 
-module.exports = { fetchPostmaterials, CreatePost };
+module.exports = { fetchPostmaterials, CreatePost , deletePost};
