@@ -1,0 +1,50 @@
+ <div class="content-body py-4">
+    <div class="container">
+      <div class="row">
+ 
+ 		<%- include('blocks/side_menu.ejs') %>
+
+		<div class="card shadow-lg border-0 rounded mb-4">
+			
+			<div class="card-body p-0">
+				<% if (Array.isArray(author) && author.length > 0) { %>
+					<div class="table-responsive">
+						<table class="table table-hover table-striped align-middle mb-0">
+							<thead class="table-light text-center">
+								<tr>
+									<th>📁 Author Name</th>
+									<th style="text-align: center;">🛠️ Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% author.forEach(item => { %>
+									<tr>
+										<td>
+											<a href="/category/<%= item.id %>" class="fw-semibold text-decoration-none text-dark">
+												<i class="bi bi-folder-fill text-warning me-1"></i><%= item.name %>
+											</a>
+										</td>
+										<td class="text-center">
+											<a href="/admin/dashboard/deletecategory/<%= item.id %>" 
+											class="btn btn-sm btn-danger shadow-sm px-3"
+											onclick="return confirm('Are you sure you want to delete this category?');">
+												<i class="bi bi-trash3-fill me-1"></i>Delete
+											</a>
+										</td>
+									</tr>
+								<% }); %>
+							</tbody>
+						</table>
+					</div>
+				<% } else { %>
+					<div class="alert alert-warning text-center m-3 rounded shadow-sm">
+						<h6 class="mb-0">⚠️ কোনো লেখক পাওয়া যায় নি।</h6>
+					</div>
+				<% } %>
+			</div>
+		</div>
+
+
+      </div>
+    </div>
+</div>
