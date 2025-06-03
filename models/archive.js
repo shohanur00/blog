@@ -25,7 +25,7 @@ const getPost = async ({ month, year,limit, offset }) => {
 
 
     const postsResult = await db.query(postSql, [year,month,limit, offset]);
-    console.log(postsResult)
+    //console.log(postsResult)
     const countResult = await db.query(countSql,[year,month]);
 
     return {

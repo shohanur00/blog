@@ -13,7 +13,7 @@ router.get('/:month/:year', async (req, res) => {
     
         try {
             const result = await archiveModel.getIndexData({ month,year,limit, offset });
-            console.log(result);
+            //console.log(result);
             const monthNames =  [
                                   "জানুয়ারি", // January
                                   "ফেব্রুয়ারি", // February

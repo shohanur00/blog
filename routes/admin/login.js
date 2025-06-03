@@ -78,7 +78,7 @@ router.get('/', (req, res) => {
   router.get('/dashboard/addpost', requireAdminAuth, async (req, res) => {
     try {
       const fetch_data = await addPostModel.fetchPostmaterials();
-      console.log(fetch_data.author)
+      //console.log(fetch_data.author)
       res.render('admin/addPost', {
         user: req.session.user,
         author: fetch_data.author,
@@ -217,7 +217,7 @@ router.post('/dashboard/addauthor', requireAdminAuth, async (req, res) => {
   
       try {
           const result = await indexModel.getIndexData({ limit, offset });
-          console.log(result.archive);
+          //console.log(result.archive);
   
           //console.log(result);
           res.render('admin/view-category', {
@@ -243,7 +243,7 @@ router.post('/dashboard/addauthor', requireAdminAuth, async (req, res) => {
   
       try {
           const result = await indexModel.getIndexData({ limit, offset });
-          console.log(result.archive);
+          //console.log(result.archive);
   
           //console.log(result);
           res.render('admin/view-author', {
